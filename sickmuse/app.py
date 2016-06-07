@@ -11,7 +11,7 @@ from tornado.process import task_id
 from tornado.options import define, parse_command_line, options
 from tornado.web import Application, url
 
-from sickmuse.handlers import RootHandler, HostHandler, MetricAPIHandler
+from sickmuse.handlers import RootHandler, HostHandler, MetricAPIHandler, APIList, APIFast
 
 
 define("port", default=8282, type=int, help="Server port")
@@ -28,6 +28,8 @@ class APIApplication(Application):
             url(r"{0}".format(prefix), RootHandler, name='index'),
             url(r"{0}host/(.*)".format(prefix), HostHandler, name='host-detail'),
             url(r"{0}api/(.*)/(.*)".format(prefix), MetricAPIHandler, name='api-detail'),
+            url(r"{0}apilist/(.*)".format(prefix), APIList, name='api-list'),
+            url(r"{0}apifast/(.*)/(.*)".format(prefix), APIFast, name='api-fast'),
         ]
         # Default settings
         settings = dict(
